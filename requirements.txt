@@ -1,0 +1,10 @@
+Flask>=2.0
+flask-cors>=3.0
+werkzeug>=2.0
+requests>=2.25
+beautifulsoup4>=4.9
+google-genai>=0.1
+numpy>=1.21
+sentence-transformers>=2.2
+faiss-cpu>=1.7.4
+ollama>=0.0.4

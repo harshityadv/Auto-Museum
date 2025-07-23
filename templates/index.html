@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Museum Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="description" content="Transform ordinary images into engaging museum exhibit descriptions with AI">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="header__title">🏛️ Auto-Museum Generator</h1>
+            <p class="header__subtitle">Transform images into engaging museum exhibits with AI</p>
+        </header>
+
+        <!-- Upload Section -->
+        <section id="uploadSection" class="upload-section">
+            <div class="card">
+                <div class="card__body">
+                    <!-- Upload Area -->
+                    <div id="uploadArea" class="upload-area">
+                        <div class="upload-area__icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <circle cx="8.5" cy="8.5" r="1.5"/>
+                                <polyline points="21,15 16,10 5,21"/>
+                            </svg>
+                        </div>
+                        <h3 class="upload-area__title">Upload any artifact, artwork, or historical object</h3>
+                        <p class="upload-area__description">Click to browse or drag and drop your image here</p>
+                        <p class="upload-area__formats">Supports JPG, PNG, GIF (Max 16MB)</p>
+                        <input type="file" id="fileInput" class="upload-area__input" accept="image/*">
+                    </div>
+
+                    <!-- Upload Preview (Hidden by default) -->
+                    <div id="uploadPreview" class="upload-preview hidden">
+                        <img id="previewImage" class="upload-preview__image" alt="Preview">
+                        <div class="upload-preview__info">
+                            <p id="previewFilename" class="upload-preview__filename"></p>
+                            <button id="processBtn" class="btn btn--primary">
+                                🔍 Generate Museum Description
+                            </button>
+                            <button id="removeBtn" class="btn btn--secondary">
+                                ❌ Remove Image
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Upload Actions -->
+                    <div class="upload-actions">
+                        <button id="demoBtn" class="btn btn--outline">
+                            ✨ Try Demo with Sample Artifact
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Loading Section -->
+        <section id="loadingSection" class="loading-section hidden">
+            <div class="card">
+                <div class="card__body">
+                    <div class="loading-content">
+                        <div class="loading-spinner"></div>
+                        <h3>Creating Your Museum Exhibit...</h3>
+                        <p>Our AI is analyzing your image, researching historical context, and crafting a professional museum description. This may take 10-15 seconds.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="resultsSection" class="results-section hidden">
+            <div class="card">
+                <div class="card__body">
+                    <!-- Result Header -->
+                    <div class="result-header">
+                        <h2 id="resultTitle" class="result-title"></h2>
+                        <div class="result-actions">
+                            <button id="speakBtn" class="btn btn--secondary" style="display: inline-flex;" title="Listen to museum description">
+                                🔊 Listen
+                            </button>
+                            <button id="stopSpeakBtn" class="btn btn--secondary" style="display: none;" title="Stop narration">
+                                ⏹️ Stop
+                            </button>
+                            <button id="copyBtn" class="btn btn--secondary" title="Copy description">
+                                📋 Copy
+                            </button>
+                            <button id="shareBtn" class="btn btn--secondary" title="Share exhibit">
+                                📤 Share
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Result Content -->
+                    <div class="result-content">
+                        <div id="resultDescription" class="result-description"></div>
+                        
+                        <div class="result-meta">
+                            <div class="meta-item">
+                                <strong>Object:</strong>
+                                <span id="resultObject"></span>
+                            </div>
+                            <div class="meta-item">
+                                <strong>Source:</strong>
+                                <a id="resultSource" href="#" target="_blank" rel="noopener"></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Result Footer -->
+                    <div class="result-footer">
+                        <button id="newUploadBtn" class="btn btn--primary">
+                            🆕 Process Another Image
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section">
+            <div class="card">
+                <div class="card__body">
+                    <h3>How It Works</h3>
+                    <p>This AI-powered tool transforms ordinary images into engaging museum exhibit descriptions. Simply upload an image of an artifact, artwork, or historical object, and our system will generate a professional museum-style description complete with historical context, interesting facts, and educational content.</p>
+                    
+                    <div class="features-grid">
+                        <div class="feature">
+                            <h4>🎯 AI Object Recognition</h4>
+                            <p>Advanced computer vision identifies artifacts and historical objects with high accuracy</p>
+                        </div>
+                        <div class="feature">
+                            <h4>📚 Wikipedia Integration</h4>
+                            <p>Automatically researches and gathers comprehensive information from reliable sources</p>
+                        </div>
+                        <div class="feature">
+                            <h4>🏛️ Museum-Quality Writing</h4>
+                            <p>Professional descriptions suitable for gallery displays and educational materials</p>
+                        </div>
+                        <div class="feature">
+                            <h4>🔊 Audio Narration</h4>
+                            <p>Listen to museum-style audio descriptions with professional voice synthesis</p>
+                        </div>
+                        <div class="feature">
+                            <h4>🎓 Educational Content</h4>
+                            <p>Rich background information, cultural significance, and fascinating historical facts</p>
+                        </div>
+                        <div class="feature">
+                            <h4>📱 Easy Sharing</h4>
+                            <p>Copy descriptions or share your discoveries on social media platforms</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 Auto-Museum Generator. Created with AI for educational purposes.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
